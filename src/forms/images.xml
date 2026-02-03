@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <fieldset name="item">
+        <field
+            name="image"
+            type="media"
+            label="MOD_CUSTOM_ENHANCED_FIELD_IMAGE_LABEL"
+        />
+        <field
+            name="image_alt"
+            type="text"
+            label="MOD_CUSTOM_ENHANCED_FIELD_IMAGE_ALT_LABEL"
+            description="MOD_CUSTOM_ENHANCED_FIELD_IMAGE_ALT_DESC"
+            filter="string"
+        />
+        <field
+            name="image_mobile"
+            type="media"
+            label="MOD_CUSTOM_ENHANCED_FIELD_IMAGE_MOBILE_LABEL"
+            description="MOD_CUSTOM_ENHANCED_FIELD_IMAGE_MOBILE_DESC"
+        />
+    </fieldset>
+</form>
