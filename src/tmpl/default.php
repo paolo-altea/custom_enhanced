@@ -8,7 +8,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Uri\Uri;
@@ -29,30 +29,20 @@ if (!is_array($images)) {
     $images = [];
 }
 
-$images = array_values(array_filter($images, static function ($item) {
-    if (is_object($item)) {
-        $item = (array) $item;
-    }
-
-    return !empty($item['image']);
-}));
+// Normalizzazione unica: cast ad array e filtro immagini vuote
+$images = array_values(array_filter(array_map(static function ($item) {
+    $item = (array) $item;
+    return !empty($item['image']) ? $item : null;
+}, $images)));
 
 ?>
 
-<div id="<?php echo $modId; ?>" class="mod-custom-enhanced custom">
+<div id="<?php echo htmlspecialchars($modId, ENT_QUOTES, 'UTF-8'); ?>" class="mod-custom-enhanced custom">
     <?php if (!empty($images)) : ?>
         <div class="mod-custom-enhanced__media">
             <?php foreach ($images as $item) : ?>
                 <?php
-                if (is_object($item)) {
-                    $item = (array) $item;
-                }
-
-                $image = $item['image'] ?? null;
-                if (!$image) {
-                    continue;
-                }
-
+                $image = $item['image'];
                 $imageAlt = $item['image_alt'] ?? '';
                 $imageMobile = $item['image_mobile'] ?? null;
 
@@ -66,14 +56,14 @@ $images = array_values(array_filter($images, static function ($item) {
                 ?>
                 <picture class="mod-custom-enhanced__picture">
                     <?php if ($imageMobileUrl) : ?>
-                        <source media="(max-width: 768px)" srcset="<?php echo $imageMobileUrl; ?>">
+                        <source media="(max-width: 768px)" srcset="<?php echo htmlspecialchars($imageMobileUrl, ENT_QUOTES, 'UTF-8'); ?>">
                     <?php endif; ?>
                     <img
-                        src="<?php echo $imageUrl; ?>"
+                        src="<?php echo htmlspecialchars($imageUrl, ENT_QUOTES, 'UTF-8'); ?>"
                         alt="<?php echo htmlspecialchars($imageAlt, ENT_QUOTES, 'UTF-8'); ?>"
                         <?php if ($imageWidth && $imageHeight) : ?>
-                            width="<?php echo $imageWidth; ?>"
-                            height="<?php echo $imageHeight; ?>"
+                            width="<?php echo htmlspecialchars((string) $imageWidth, ENT_QUOTES, 'UTF-8'); ?>"
+                            height="<?php echo htmlspecialchars((string) $imageHeight, ENT_QUOTES, 'UTF-8'); ?>"
                         <?php endif; ?>
                         class="mod-custom-enhanced__image"
                         loading="lazy"

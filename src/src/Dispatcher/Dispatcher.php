@@ -35,8 +35,8 @@ class Dispatcher extends AbstractModuleDispatcher
     {
         $data = parent::getLayoutData();
 
-        if (($data['params'])->get('prepare_content', 1)) {
-            ($data['module'])->content = HTMLHelper::_('content.prepare', ($data['module'])->content, '', 'mod_custom_enhanced.content');
+        if ($data['params']->get('prepare_content', 0)) {
+            $data['module']->content = HTMLHelper::_('content.prepare', $data['module']->content, '', 'mod_custom_enhanced.content');
         }
 
         return $data;
